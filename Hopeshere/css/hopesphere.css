@@ -1,0 +1,11 @@
+.hopesphere {
+    display: flex;
+    justify-content: center; /* Horizontal */
+    align-items: center;    /* Vertical */
+    height: 10vh;          /* Full viewport height for vertical centering */
+  }
+
+  .hope {
+    width: 50%;
+    height: auto;
+}

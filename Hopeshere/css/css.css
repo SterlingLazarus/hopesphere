@@ -1,0 +1,93 @@
+/* we can use a single css file to style all the files in our wwebsite */
+
+/* you can pick your own background colors, text colors, and fonts */
+
+/* we can select an html element tag, in this case "body" will apply to the whole document */
+@font-face {
+    font-family: "radlushblack"; /* Name for the font */
+    src: url(../fonts/radlushblack.otf); /* Recommended modern format */
+    font-weight:normal; /* Optional */
+    font-style: normal;  /* Optional */
+  }
+
+@font-face {
+    font-family: "radlushmedium"; /* Name for the font */
+    src: url(../fonts/radlushmedium.otf); /* Recommended modern format */
+    font-weight:normal; /* Optional */
+    font-style: normal;  /* Optional */
+  }
+
+@font-face {
+    font-family: "radlushregular"; /* Name for the font */
+    src: url(../fonts/radlushregular.ttf); /* Recommended modern format */
+    font-weight:normal; /* Optional */
+    font-style: normal;  /* Optional */
+  }
+
+body {
+    background-color: #305CDE;
+  }
+  
+  /* we can have rules apply to multiple elements at the same time with commas */
+  h1 {
+    font-family: 'radlushblack', sans-serif;
+    letter-spacing: 5px;
+    word-spacing: 5px;
+    font-size: 200%;
+    display: flex;
+    justify-content: center; /* Horizontal */
+    align-items: center;    /* Vertical */
+    height: 10vh;          /* Full viewport height for vertical centering */
+  }
+  
+  h2 {
+    font-family: 'radlushmedium', sans-serif;
+    letter-spacing: 5px;
+    word-spacing: 5px;
+    font-size: 200%;
+    display: flex;
+    justify-content: center; /* Horizontal */
+    align-items: center;    /* Vertical */
+    height: 10vh;          /* Full viewport height for vertical centering */
+  }
+
+  .enter {
+    display: flex;
+    justify-content: center; /* Horizontal */
+    align-items: center;    /* Vertical */
+    height: 10vh;          /* Full viewport height for vertical centering */
+  }
+  
+  /* the hashtag in a CSS selector selects an element by id, e.g., id="content" */
+  #content {
+    margin: 10px;
+    padding: 10px;
+    border: solid 1px #888;
+    background-color: #6b9499;
+  }
+  
+  /* the period in a CSS selector selects an element by class, e.g., class="minor-section" */
+  .minor-section {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: solid 1px #888;
+    background-color: #A3C9A8;
+    font-family: 'radlushregular';
+    display: flex;
+    justify-content: center; /* Horizontal */
+    align-items: center;    /* Vertical */
+    height: 10vh;          /* Full viewport height for vertical centering */
+  }
+  
+ 
+  /* Usage example */
+  body {
+    font-family: 'CustomFont', sans-serif; /* Fallback to sans-serif if the custom font fails */
+  }
+
+  .container {
+    display: flex;
+    justify-content: center; /* Horizontal */
+    align-items: center;    /* Vertical */
+    height: 100vh;          /* Full viewport height for vertical centering */
+  }
