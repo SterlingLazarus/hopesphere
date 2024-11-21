@@ -21,7 +21,7 @@ let object;
 let controls;
 
 //Set which object to render
-let objToRender = 'bismuth_orb';
+let objToRender = 'cyber_orb';
 
 //Instantiate a loader for the .gltf file
 const loader = new GLTFLoader();
@@ -32,6 +32,8 @@ loader.load(
   function (gltf) {
     //If the file is loaded, add it to the scene
     object = gltf.scene;
+    //scale up object
+    object.scale.set(5, 5, 5);
     scene.add(object);
   },
   function (xhr) {
@@ -52,7 +54,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById("container3D").appendChild(renderer.domElement);
 
 //Set how far the camera will be from the 3D model
-camera.position.z = objToRender === "bismuth_orb" ? 25 : 500;
+camera.position.z = objToRender === "cyber_orb" ? 25 : 500;
 
 //Add lights to the scene, so we can actually see the 3D model
 const topLight = new THREE.DirectionalLight(0xffffff, 1); // (color, intensity)
@@ -60,11 +62,11 @@ topLight.position.set(500, 500, 500) //top-left-ish
 topLight.castShadow = true;
 scene.add(topLight);
 
-const ambientLight = new THREE.AmbientLight(0x333333, objToRender === "bismuth_orb" ? 5 : 1);
+const ambientLight = new THREE.AmbientLight(0x333333, objToRender === "cyber_orb" ? 5 : 1);
 scene.add(ambientLight);
 
 //This adds controls to the camera, so we can rotate / zoom it with the mouse
-if (objToRender === "bismuth_orb") {
+if (objToRender === "cyber_orb") {
   controls = new OrbitControls(camera, renderer.domElement);
 }
 
@@ -74,7 +76,7 @@ function animate() {
   //Here we could add some code to update the scene, adding some automatic movement
 
   //Make the eye move
-  if (object && objToRender === "bismuth_orb") {
+  if (object && objToRender === "cyber_orb") {
     //I've played with the constants here until it looked good 
     object.rotation.y = -3 + mouseX / window.innerWidth * 3;
     object.rotation.x = -1.2 + mouseY * 2.5 / window.innerHeight;
