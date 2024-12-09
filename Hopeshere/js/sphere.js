@@ -1,221 +1,71 @@
-import * as THREE from "https://cdn.skypack.dev/three@0.129.0/build/three.module.js";
-import { OrbitControls } from "https://cdn.skypack.dev/three@0.129.0/examples/jsm/controls/OrbitControls.js";
-import { GLTFLoader } from "https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js";
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
-// Create a Three.JS Scene
+// Scene setup
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xeeeeee); // Add a light background for contrast
-
-// Create a Camera
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
-camera.position.z = 50;
-
-// Mouse Position for Raycaster
-const mouse = new THREE.Vector2();
-const raycaster = new THREE.Raycaster();
-
-// Track the loaded model and its status
-let object;
-let isModelLoaded = false;
-
-// Animation lock to prevent spamming
-let isAnimating = false;
-
-// Mouse position for rotation
-let mouseX = window.innerWidth / 2;
-let mouseY = window.innerHeight / 2;
-
-// OrbitControls
-let controls;
-
-// GLTFLoader for 3D Model
-const loader = new GLTFLoader();
-loader.load(
-  `models/cyber_orb/scene.gltf`,
-  function (gltf) {
-    object = gltf.scene;
-    object.scale.set(7, 7, 7);
-    scene.add(object);
-    isModelLoaded = true;
-
-    console.log("Model added to the scene:", object);
-    renderer.render(scene, camera); // Render immediately after adding the model
-  },
-  function (xhr) {
-    console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-  },
-  function (error) {
-    console.error(error);
-  }
-);
-
-// Renderer
-const renderer = new THREE.WebGLRenderer({ alpha: true });
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-document.getElementById("container3D").appendChild(renderer.domElement);
-renderer.render(scene, camera); // Initial render
+document.body.appendChild(renderer.domElement);
+const container3D = document.getElementById('container3D');
+container3D.appendChild(renderer.domElement);
 
 // Lighting
-const topLight = new THREE.DirectionalLight(0xffffff, 1.5);
-topLight.position.set(500, 500, 500);
-scene.add(topLight);
+const light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(5, 10, 7.5);
+scene.add(light);
 
-const ambientLight = new THREE.AmbientLight(0x333333, 2);
-scene.add(ambientLight);
+// Controls
+const controls = new OrbitControls(camera, renderer.domElement);
+camera.position.set(0, 2, 5);
+controls.update();
 
-// OrbitControls
-controls = new OrbitControls(camera, renderer.domElement);
+// Load 3D model
+const loader = new GLTFLoader();
+let clickableObject;
 
-// Animation Function
-function animate() {
-  if (!isModelLoaded) {
-    requestAnimationFrame(animate); // Wait for the model to load
-    return;
-  }
+loader.load(
+  'models/cyber_orb/scene.gltf',
+  (gltf) => {
+    console.log('Model loaded:', gltf);
+    clickableObject = gltf.scene;
+    scene.add(gltf.scene);
+  },
+  undefined,
+  (error) => console.error('Error loading model:', error)
+);
 
-  requestAnimationFrame(animate);
+// Raycaster for click detection
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
 
-  if (controls) {
-    controls.update();
-  }
-
-  // Rotate object with mouse movement
-  if (object) {
-    object.rotation.y = -3 + (mouseX / window.innerWidth) * 3;
-    object.rotation.x = -1.2 + (mouseY * 2.5) / window.innerHeight;
-  }
-
-  renderer.render(scene, camera);
-}
-
-// Handle Window Resize
-window.addEventListener("resize", function () {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-// Detect Mouse Clicks
-window.addEventListener("click", (event) => {
-  if (!isModelLoaded || isAnimating) return;
-
-  // Update mouse position for raycasting
+// Event listener for mouse clicks
+function onClick(event) {
+  // Convert mouse position to normalized device coordinates
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
+  // Update raycaster and check intersections
   raycaster.setFromCamera(mouse, camera);
-  const intersects = raycaster.intersectObject(object, true);
+  const intersects = raycaster.intersectObject(clickableObject, true);
 
   if (intersects.length > 0) {
-    // Play scale animation on the root object only
-    playScaleAnimation(object);
-    displayPhrase(object.position);
+    // Display a message when the object is clicked
+    const messageDiv = document.getElementById('message');
+    messageDiv.innerText = 'You clicked the orb!';
+    messageDiv.style.color = 'white';
+    messageDiv.style.background = 'black';
+    messageDiv.style.padding = '10px';
   }
-});
-
-// Scale Animation
-function playScaleAnimation(target) {
-  if (isAnimating) return;
-  isAnimating = true; // Lock further clicks during animation
-
-  const initialScale = target.scale.clone();
-
-  // Faster animation speed
-  const duration = 150; // Animation in milliseconds
-  const scaleUp = new THREE.Vector3(initialScale.x * 1.5, initialScale.y * 1.5, initialScale.z * 1.5);
-
-  // Scale up
-  const scaleUpTween = {
-    elapsedTime: 0,
-    animate() {
-      if (this.elapsedTime < duration) {
-        this.elapsedTime += 16; // Simulating ~60FPS (16ms per frame)
-        const factor = this.elapsedTime / duration;
-        target.scale.lerpVectors(initialScale, scaleUp, factor);
-        requestAnimationFrame(this.animate.bind(this));
-      } else {
-        playScaleDownAnimation(target, scaleUp);
-      }
-    },
-  };
-
-  scaleUpTween.animate();
 }
 
-// Scale Down Animation
-function playScaleDownAnimation(target, scaleUp) {
-  const initialScale = scaleUp;
-  const scaleDown = new THREE.Vector3(initialScale.x / 1.5, initialScale.y / 1.5, initialScale.z / 1.5);
-
-  const duration = 150; // Animation in milliseconds
-
-  // Scale down
-  const scaleDownTween = {
-    elapsedTime: 0,
-    animate() {
-      if (this.elapsedTime < duration) {
-        this.elapsedTime += 16; // Simulating ~60FPS (16ms per frame)
-        const factor = this.elapsedTime / duration;
-        target.scale.lerpVectors(initialScale, scaleDown, factor);
-        requestAnimationFrame(this.animate.bind(this));
-      } else {
-        target.scale.copy(scaleDown); // Ensure final scale
-        isAnimating = false; // Unlock animation
-      }
-    },
-  };
-
-  scaleDownTween.animate();
+window.addEventListener('click', onClick);
+if (!clickableObject) return; 
+// Animation loop
+function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
 }
-
-// Display a random phrase with motion and fade-out effect
-function displayPhrase(position) {
-  // const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
-  const randomPhrase = makePhrase()
-
-  // Create a DOM element for the phrase
-  const phraseElement = document.createElement("div");
-  phraseElement.style.position = "absolute";
-  phraseElement.style.color = "black";
-  phraseElement.style.background = "rgba(255, 255, 255, 0.8)";
-  phraseElement.style.padding = "5px 10px";
-  phraseElement.style.borderRadius = "5px";
-  phraseElement.style.fontSize = "16px";
-  phraseElement.style.transition = "transform 2s ease-out, opacity 3s ease-out";
-  phraseElement.innerText = randomPhrase;
-
-  document.body.appendChild(phraseElement);
-
-  // Position it relative to the object
-  const vector = position.clone().project(camera);
-  const x = (vector.x * 0.5 + 0.5) * window.innerWidth;
-  const y = -(vector.y * 0.5 - 0.5) * window.innerHeight;
-
-  phraseElement.style.left = `${x}px`;
-  phraseElement.style.top = `${y}px`;
-
-  // Random angle for movement
-  const angle = Math.random() * 2 * Math.PI;
-  const moveX = Math.cos(angle) * 150; // Move 50px in random direction
-  const moveY = Math.sin(angle) * 150;
-
-  // Animate phrase
-  setTimeout(() => {
-    phraseElement.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.5)`;
-    phraseElement.style.opacity = "0";
-  }, 0);
-
-  // Remove the phrase after 1 second
-  setTimeout(() => {
-    document.body.removeChild(phraseElement);
-  }, 1000);
-}
-
-// Mouse Movement for Rotation
-document.onmousemove = (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-};
-
-// Start the Animation Loop
 animate();
