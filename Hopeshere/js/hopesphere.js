@@ -48,7 +48,7 @@ function makePhrase(){
       "never give up", 
       "hope will come your way", 
       "your future self will thank you", 
-      ", and that's more than enough", 
+      "and that's more than enough", 
     ], 
     "compare": [
       "life is like #object#", 
@@ -113,42 +113,33 @@ function makePhrase(){
   ];*/
 
 
-  // code base from Jeremy, modified by Michael and Sterling 
-  $("#sphereClick").click(function () {
-    // Display a random phrase with motion and fade-out effect
-    $("#container").append("<div class='message'>" + makePhrase() + "</div>");
-    const phraseElement = $(".message:last-child");
-  
-    // Set initial position and style
-    phraseElement.css({
-      left: "50vw",
-      top: "50vh",
-      transform: "translate(-50%, -50%)",
-      opacity: "1", // Ensure visibility at the start
-    });
-  
-    // Random angle for movement
-    const angle = Math.random() * 2 * Math.PI;
-    const moveX = Math.cos(angle) * 150;
-    const moveY = Math.sin(angle) * 150;
-  
-    // Ensure animations take effect
-    setTimeout(() => {
-      phraseElement.css({
-        transform: `translate(${moveX}px, ${moveY}px) scale(1.5)`,
-      });
-    }, 0);
-  
-    // Fade-out opacity after 2 seconds
-    setTimeout(() => {
-      phraseElement.css({
-        opacity: "0",
-      });
-    }, 3000);
-  
-    // Remove the phrase after 4 seconds
-    setTimeout(() => {
-      phraseElement.remove();
-    }, 6000);
-  });
-  
+$("#sphereClick").click(function(){
+  // Code base borrowed from Jeremy, altered by Michael
+  // Display a random phrase with motion and fade-out effect
+
+  // Create a DOM element for the phrase
+  $("#container").append("<div class='message'>" + makePhrase());
+  const phraseElement = $(".message:last-child");
+  console.log(phraseElement)
+
+  phraseElement.css("left", `${50}vw`);
+  phraseElement.css("top", `${50}vh`);
+  phraseElement.css("transform", "translate(-50%, -50%)")
+
+  // Random angle for movement
+  const angle = Math.random() * 2 * Math.PI;
+  const moveX = Math.cos(angle) * 150; // Move 50px in random direction
+  const moveY = Math.sin(angle) * 150;
+
+  // Animate phrase
+  setTimeout(() => {
+    phraseElement.css("transform", `translate(${moveX}px, ${moveY}px) scale(1.5)`);
+    phraseElement.css("opacity", "0")
+  }, 0);
+
+  // Remove the phrase after 1 second
+  setTimeout(() => {
+    phraseElement.remove();
+  }, 1000);
+
+});

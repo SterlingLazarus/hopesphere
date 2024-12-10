@@ -3,9 +3,10 @@
   color: black;
   background: rgba(246, 242, 234, 0.9);
   padding: 5px 10px;
+  max-width: 30vw;
   border-radius: 5px;
   font-size: 16px;
-  transition: transform 2s ease-out, opacity 1s ease-out;
+  transition: transform 4s ease-out, opacity 4s ease-out;
 }
 
 body{
