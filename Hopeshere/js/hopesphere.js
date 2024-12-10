@@ -48,7 +48,7 @@ function makePhrase(){
       "never give up", 
       "hope will come your way", 
       "your future self will thank you", 
-      ", and that's more than enough", 
+      "and that's more than enough", 
     ], 
     "compare": [
       "life is like #object#", 
@@ -128,8 +128,8 @@ $("#sphereClick").click(function(){
 
   // Random angle for movement
   const angle = Math.random() * 2 * Math.PI;
-  const moveX = Math.cos(angle) * 150; // Move 50px in random direction
-  const moveY = Math.sin(angle) * 150;
+  const moveX = Math.cos(angle) * 180; // Move 50px in random direction
+  const moveY = Math.sin(angle) * 170;
 
   // Animate phrase
   setTimeout(() => {
@@ -140,6 +140,6 @@ $("#sphereClick").click(function(){
   // Remove the phrase after 1 second
   setTimeout(() => {
     phraseElement.remove();
-  }, 1000);
+  }, 4000);
 
 });
