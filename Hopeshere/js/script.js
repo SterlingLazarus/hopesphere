@@ -38,7 +38,7 @@ function drawMatrix() {
         char.style.left = (i * 20) + 'px';
         char.style.top = column.y * 20 + 'px';
         char.style.fontSize = '20px';
-        char.style.color = '#00ff00';
+        char.style.color = '#efbf04';
         char.textContent = randomChar();
 
         // Append to the matrix container
