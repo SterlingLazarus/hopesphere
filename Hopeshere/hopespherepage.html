@@ -1,31 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
     <title>hopesphere</title>
-
     <link rel="stylesheet" href="css/hopesphere.css" />
-
-    <!-- jquery -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-			integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-			crossorigin="anonymous"></script>
-    <!-- stuff for tracery integration. Wes called it an API but it's technically not since you need to actually have the files afaik -->
-    <script type="text/javascript" src="js/tracery/mods-eng-basic.js"></script>
-    <script type="text/javascript" src="js/tracery/tracery.js"></script>
-    <!-- function to generate sentence  -->
-    <script type="text/javascript" src="js/sentence.js"></script>
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"></script>
+    
+    <!-- Tracery -->
+    <script src="js/tracery/mods-eng-basic.js"></script>
+    <script src="js/tracery/tracery.js"></script>
+    <script src="js/sentence.js"></script>
+    
+    <!-- Three.js -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/examples/js/controls/OrbitControls.js"></script>
+    
+    <style>
+      body { margin: 0; overflow: hidden; }
+      canvas { display: block; }
+      #container3D {
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      #message {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 10;
+      }
+    </style>
   </head>
-
+  <video autoplay muted loop>
+		<source src="../Hopeshere/img/new wish sphere v10001-0150 (1).mp4" type="video/mp4">
+	  </video>
   <body>
     <header>
       <h1>hopesphere</h1>
     </header>
-
     <main>
       <div id="container3D"></div>
+      <div id="message"></div>
     </main>
-
+    <!-- Main JavaScript -->
+    <script src="script.js"></script>
     <script type="module" src="js/sphere.js"></script>
   </body>
 </html>

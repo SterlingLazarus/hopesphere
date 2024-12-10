@@ -27,7 +27,7 @@ body, html {
     width: 100%;
     overflow: hidden;
     background-color: black;
-    color: #00ff00;
+    color: #efbf04;
     font-family: monospace;
     position: relative;
     font-family: 'Klepto', sans-serif;
@@ -50,13 +50,13 @@ body, html {
     left: 50%;
     transform: translate(-50%, -50%);
     background: black;
-    border: 2px solid #00ff00; /* Same green as falling letters */
+    border: 2px solid #efbf04; /* Same green as falling letters */
     width: 70vw; /* Use 80% of the viewport width */
     height: 70vh; /* Use 60% of the viewport height */
     padding: 40px;
     box-sizing: border-box; /* Include padding and border in the width and height */
     z-index: 2; /* Ensure the box is above the background */
-    box-shadow: 0 0 10px #00ff00;
+    box-shadow: 0 0 10px #efbf04;
     text-align: center;
     overflow: hidden; /* Prevent overflow if content expands */
 }
@@ -65,7 +65,7 @@ body, html {
 .center-box-container h1 {
     margin: 0 0 20px;
     font-size: 4vw; /* Scale title dynamically with screen size */
-    color: #00ff00;
+    color: #efbf04;
     text-transform: uppercase;
     font-family: 'Johnny', sans-serif;
 }
@@ -74,7 +74,7 @@ body, html {
 .center-box-container p {
     margin: 0 0 20px;
     font-size: 1.8vw; /* Scale description text dynamically */
-    color: #00ff00;
+    color: #efbf04;
 }
 
 /* Style for the anchor tag around the button */
@@ -86,9 +86,9 @@ body, html {
 .center-box-container button {
     padding: 15px 30px; /* Add padding for a larger button */
     font-size: 2vw; /* Font size relative to viewport width */
-    border: 1px solid #00ff00; /* Green border */
+    border: 1px solid #efbf04; /* Green border */
     background: black; /* Black background */
-    color: #00ff00; /* Green text */
+    color: #efbf04; /* Green text */
     cursor: pointer;
     text-transform: uppercase; /* Make the text uppercase */
     font-family: monospace; /* Match the font family used throughout the site */
@@ -97,12 +97,12 @@ body, html {
 }
 
 .center-box-container button:hover {
-    background: #00ff00; /* Green background on hover */
+    background: #efbf04; /* Green background on hover */
     color: black; /* Change text color to black on hover */
 }
 
 /* Optional: Add a focus style for accessibility */
 .center-box-container button:focus {
     outline: none; /* Remove default outline */
-    box-shadow: 0 0 5px 2px #00ff00; /* Green glow when focused */
+    box-shadow: 0 0 5px 2px #efbf04; /* Green glow when focused */
 }
