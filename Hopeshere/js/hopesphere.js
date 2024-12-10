@@ -1,3 +1,10 @@
+//Author: Michael Thomas, code borrowed from Jeremy
+//THIS IS THE JAVASCRIPT USED BY FAKE 3D
+
+
+// let bgMusic = document.getElementById("background-audio");
+// bgMusic.play();
+
 //using Tracery Repository to MadLibs phrases
 function makePhrase(){
   let phrases = {
@@ -105,10 +112,34 @@ function makePhrase(){
     "Keep going! Don't stop!"
   ];*/
 
-makePhrase();
-
-console.log($("#sphereClick"));
 
 $("#sphereClick").click(function(){
-  makePhrase();
+  // Code base borrowed from Jeremy, altered by Michael
+  // Display a random phrase with motion and fade-out effect
+
+  // Create a DOM element for the phrase
+  $("#container").append("<div class='message'>" + makePhrase());
+  const phraseElement = $(".message:last-child");
+  console.log(phraseElement)
+
+  phraseElement.css("left", `${50}vw`);
+  phraseElement.css("top", `${50}vh`);
+  phraseElement.css("transform", "translate(-50%, -50%)")
+
+  // Random angle for movement
+  const angle = Math.random() * 2 * Math.PI;
+  const moveX = Math.cos(angle) * 150; // Move 50px in random direction
+  const moveY = Math.sin(angle) * 150;
+
+  // Animate phrase
+  setTimeout(() => {
+    phraseElement.css("transform", `translate(${moveX}px, ${moveY}px) scale(1.5)`);
+    phraseElement.css("opacity", "0")
+  }, 0);
+
+  // Remove the phrase after 1 second
+  setTimeout(() => {
+    phraseElement.remove();
+  }, 1000);
+
 });
