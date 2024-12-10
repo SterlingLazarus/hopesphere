@@ -69,3 +69,20 @@ function animate() {
   renderer.render(scene, camera);
 }
 animate();
+// Reference the audio element
+const audioElement = document.getElementById('background-audio');
+
+// Function to toggle play/pause
+function toggleAudio() {
+  if (audioElement.paused) {
+    audioElement.play(); // Play the audio if paused
+  } else {
+    audioElement.pause(); // Pause the audio if playing
+  }
+}
+
+// Optionally, you can add more advanced audio controls here
+// Example: Adjust volume
+function setVolume(volume) {
+  audioElement.volume = volume; // Volume ranges from 0.0 to 1.0
+}
